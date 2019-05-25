@@ -8,6 +8,9 @@
 .idea/**/dictionaries
 .idea/**/shelf
 venv/
+dist/
+build/
+reversi.spec
 
 # Generated files
 .idea/**/contentModel.xml

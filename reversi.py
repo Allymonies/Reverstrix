@@ -241,10 +241,11 @@ def main():
                 for room_event in room_events.__reversed__():
                     if room_event["type"] == "reverstrix":
                         # Find latest reverstrix event
-                        found = True
                         state = room_event["content"]
-                        last_state_id = room_event["event_id"]
-                        break
+                        if state["status"] == "running":
+                            found = True
+                            last_state_id = room_event["event_id"]
+                            break
                 if not found:
                     # Create reversetrix
                     state = {
