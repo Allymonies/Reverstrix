@@ -227,59 +227,54 @@ def main():
             room = client.rooms[room_id]
             room.add_state_listener(event_handler, "reverstrix")
             client.start_listener_thread()
-            room_events = room.get_events()
+            # room_events = room.get_events()
             members = room.get_joined_members()
             opponent = "0"
             for member in members:
                 member: User
                 if member.user_id != client.user_id:
                     opponent = member.user_id
-
-            if room_events:
-                found = False
-                s: Room = room
-                for room_event in room_events.__reversed__():
-                    if room_event["type"] == "reverstrix":
-                        # Find latest reverstrix event
-                        state = room_event["content"]
-                        if state["status"] == "running":
-                            found = True
-                            last_state_id = room_event["event_id"]
-                            break
-                if not found:
-                    # Create reversetrix
-                    state = {
-                        "pieces": [
-                            {
-                                "x": 3,
-                                "y": 3,
-                                "player": 0
-                            },
-                            {
-                                "x": 4,
-                                "y": 3,
-                                "player": 1
-                            },
-                            {
-                                "x": 3,
-                                "y": 4,
-                                "player": 1
-                            },
-                            {
-                                "x": 4,
-                                "y": 4,
-                                "player": 0
-                            }
-                        ],
-                        "turn": 0,
-                        "players": [
-                            client.user_id,
-                            opponent
-                        ],
-                        "status": "running"
-                    }
-                    room.send_state_event("reverstrix", state)
-                    print("Started")
+            states = client.api.get_room_state(room.room_id)
+            found = False
+            for room_state in states:
+                if room_state["type"] == "reverstrix" and room_state["content"]["status"] == "running":
+                    found = True
+                    last_state_id = room_state["event_id"]
+                    state = room_state["content"]
+            if not found:
+                # Create reversetrix
+                state = {
+                    "pieces": [
+                        {
+                            "x": 3,
+                            "y": 3,
+                            "player": 0
+                        },
+                        {
+                            "x": 4,
+                            "y": 3,
+                            "player": 1
+                        },
+                        {
+                            "x": 3,
+                            "y": 4,
+                            "player": 1
+                        },
+                        {
+                            "x": 4,
+                            "y": 4,
+                            "player": 0
+                        }
+                    ],
+                    "turn": 0,
+                    "players": [
+                        client.user_id,
+                        opponent
+                    ],
+                    "status": "running"
+                }
+                room.send_state_event("reverstrix", state)
+                print("Started")
             if state:
                 start_game = False
                 game_running = True
