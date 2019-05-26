@@ -9,6 +9,9 @@ import pygame_textinput
 from pygameMenu.locals import *
 from matrix_client.client import MatrixClient, Room, User
 
+fps = 30
+clock = pygame.time.Clock()
+
 
 def change_room(room):
     pass
@@ -391,6 +394,7 @@ def main():
             yf = sheight - ((sheight - size) / 2)
             draw_board(surface, size, cell_size, xi, xf, yi, yf, board)
         pygame.display.update()
+        clock.tick(fps)
 
 
 # run the main function only if this module is executed as the main script
