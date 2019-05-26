@@ -93,6 +93,14 @@ def draw_board(surface, size, cell_size, xi, xf, yi, yf, board):
         board[piece["y"]][piece["x"]] = piece["player"]
         pygame.draw.circle(surface, piece_color, pos, int(cell_size / 2))
 
+
+def get_score(state):
+    scores = [0, 0]
+    for piece in state["pieces"]:
+        scores[piece["player"]] += 1
+    return scores
+
+
 # define a main function
 def main():
     global client
@@ -322,6 +330,15 @@ def main():
             else:
                 turn_render = header_font.render(player_turn + "'s Turn", True, turn_color)
             surface.blit(turn_render, (0, 0))
+            scores = get_score(state)
+            red_score_name = header_font.render(state["players"][0].split(":")[0], True, (255, 0, 0))
+            red_score = header_font.render(str(scores[0]), True, (255, 0, 0))
+            blue_score_name = header_font.render(state["players"][1].split(":")[0], True, (0, 0, 255))
+            blue_score = header_font.render(str(scores[1]), True, (0, 0, 255))
+            surface.blit(red_score_name, (0, 40))
+            surface.blit(red_score, (0, 75))
+            surface.blit(blue_score_name, (0, 110))
+            surface.blit(blue_score, (0, 145))
             if player_turn == client.user_id:
                 available = []
                 for y in range(8):
@@ -393,6 +410,16 @@ def main():
             yi = ((sheight - size) / 2)
             yf = sheight - ((sheight - size) / 2)
             draw_board(surface, size, cell_size, xi, xf, yi, yf, board)
+            scores = get_score(state)
+            red_score_name = header_font.render(state["players"][0].split(":")[0], True, (255, 0, 0))
+            red_score = header_font.render(str(scores[0]), True, (255, 0, 0))
+            blue_score_name = header_font.render(state["players"][1].split(":")[0], True, (0, 0, 255))
+            blue_score = header_font.render(str(scores[1]), True, (0, 0, 255))
+            surface.blit(red_score_name, (0, 40))
+            surface.blit(red_score, (0, 75))
+            surface.blit(blue_score_name, (0, 110))
+            surface.blit(blue_score, (0, 145))
+
         pygame.display.update()
         clock.tick(fps)
 
