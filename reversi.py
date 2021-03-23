@@ -153,7 +153,7 @@ def main():
         replace_with="*"
     )
 
-    room_menu = pygame_menu.TextMenu(surface,
+    room_menu = pygame_menu.Menu(surface,
                                     dopause=False,
                                     font=pygame_menu.fonts.FONT_BEBAS,
                                     menu_color=(30, 50, 107),
