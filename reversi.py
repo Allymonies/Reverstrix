@@ -3,10 +3,10 @@ import os
 
 import pygame
 import pygame.locals as pl
-import pygameMenu
+import pygame_menu
 
 import pygame_textinput
-from pygameMenu.locals import *
+from pygame_menu.locals import *
 from matrix_client.client import MatrixClient, Room, User
 
 fps = 30
@@ -153,9 +153,9 @@ def main():
         replace_with="*"
     )
 
-    room_menu = pygameMenu.TextMenu(surface,
+    room_menu = pygame_menu.TextMenu(surface,
                                     dopause=False,
-                                    font=pygameMenu.fonts.FONT_BEBAS,
+                                    font=pygame_menu.fonts.FONT_BEBAS,
                                     menu_color=(30, 50, 107),
                                     menu_color_title=(120, 45, 30),
                                     title="Reverstrix",
