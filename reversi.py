@@ -218,20 +218,27 @@ def main():
                 user_details = username.split(":")
                 user = user_details[0].replace("@","")
                 domain = user_details[1]
+                print("0")
                 client = MatrixClient("https://" + domain)
+                print("1")
                 token = client.login(username, password, sync=True)
+                print("2")
                 rooms = []
+                print("3")
                 for room_id in client.rooms:
                     room = client.rooms[room_id]
+                    print("4 " + room_id[0:5])
                     rooms.append(
                         (room.display_name + "  " + room_id[0:5], room_id)
                     )
                     room_menu.enable()
+                print("5")
                 room_menu.add.selector("Room",
                                        rooms,
                                        onchange=change_room,
                                        onreturn=set_room
                                        )
+                print("6")
         elif start_game:
             surface.fill((48, 149, 48))
             room = client.rooms[room_id]
