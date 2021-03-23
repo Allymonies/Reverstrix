@@ -155,7 +155,7 @@ def main():
 
     room_menu = pygame_menu.Menu(surface,
                                     dopause=False,
-                                    font=pygame_menu.fonts.FONT_BEBAS,
+                                    font=pygame_menu.font.FONT_BEBAS,
                                     menu_color=(30, 50, 107),
                                     menu_color_title=(120, 45, 30),
                                     title="Reverstrix",
