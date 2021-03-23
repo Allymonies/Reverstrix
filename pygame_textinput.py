@@ -112,12 +112,23 @@ class TextInput:
                 elif event.key == pl.K_HOME:
                     self.cursor_position = 0
                 elif event.unicode == "":
-                    self.input_string = (
-                        self.input_string[:self.cursor_position]
-                        + str(pygame.scrap.get(pygame.SCRAP_TEXT).decode("utf-8")).replace("\0", "")
-                        + self.input_string[self.cursor_position:]
-                    )
-                    self.cursor_position += len(str(pygame.scrap.get(pygame.SCRAP_TEXT).decode("utf-8")))
+                    clip = pygame.scrap.get(pygame.SCRAP_TEXT)
+                    if clip:
+                        self.input_string = (
+                            self.input_string[:self.cursor_position]
+                            + str(clip.decode("utf-8")).replace("\0", "")
+                            + self.input_string[self.cursor_position:]
+                        )
+                        self.cursor_position += len(str(clip.decode("utf-8")))
+                    else:
+                        clip = pygame.scrap.get("text/plain;charset=utf-8")
+                        if clip:
+                            self.input_string = (
+                                self.input_string[:self.cursor_position]
+                                + str(clip.decode("utf-8")).replace("\0", "")
+                                + self.input_string[self.cursor_position:]
+                            )
+                            self.cursor_position += len(str(clip.decode("utf-8")))
                 else:
                     # If no special key is pressed, add unicode of key to input_string
                     self.input_string = (

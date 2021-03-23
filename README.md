@@ -8,7 +8,7 @@ Requires: pygame, pygame_menu, matrix_client, Python 3.6+
 
 Install them with
 
-    sudo pip3 install pygame pygame-menu matrix_client
+    sudo pip3 install pygame pygame_menu matrix_client
 
 And run with
 

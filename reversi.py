@@ -13,18 +13,18 @@ fps = 30
 clock = pygame.time.Clock()
 
 
-def change_room(room):
+def change_room(room, index):
     pass
 
 
-def set_room(room):
+def set_room(room, index):
     global room_id
     global room_menu
     global start_game
     room_menu.disable()
-    print(str(room))
+    print(str(room[0][1]))
     start_game = True
-    room_id = room
+    room_id = room[0][1]
 
 
 def event_handler(event):
@@ -152,17 +152,16 @@ def main():
         font_family="Arial",
         replace_with="*"
     )
+    
+    menu_theme = pygame_menu.themes.Theme(widget_font=pygame_menu.font.FONT_HELVETICA,
+                                            background_color=(30, 50, 107),
+                                            title_background_color=(120, 45, 30)
+    )
 
-    room_menu = pygame_menu.Menu(surface,
-                                    dopause=False,
-                                    font=pygame_menu.font.FONT_BEBAS,
-                                    menu_color=(30, 50, 107),
-                                    menu_color_title=(120, 45, 30),
-                                    title="Reverstrix",
-                                    window_width=swidth,
-                                    window_height=sheight,
-                                    menu_width=swidth,
-                                    menu_height=sheight,
+    room_menu = pygame_menu.Menu("Reverstrix",
+                                    swidth,
+                                    sheight,
+                                    theme = menu_theme,
                                     enabled=False
                                     )
     rooms = [
@@ -187,8 +186,8 @@ def main():
     while running:
         # event handling, gets all event from the event queue
         events = pygame.event.get()
-        if room_menu.is_enabled() and not room_menu.is_disabled():
-            room_menu.mainloop(events)
+        if room_menu.is_enabled():
+            room_menu.mainloop(surface)
         elif logging_in:
             surface.fill((0, 0, 0))
             if not textinput.update(events):
@@ -228,7 +227,7 @@ def main():
                         (room.display_name + "  " + room_id[0:5], room_id)
                     )
                     room_menu.enable()
-                room_menu.add_selector("Room",
+                room_menu.add.selector("Room",
                                        rooms,
                                        onchange=change_room,
                                        onreturn=set_room
