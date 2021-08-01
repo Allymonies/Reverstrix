@@ -192,7 +192,10 @@ def main():
             surface.fill((0, 0, 0))
             if not textinput.update(events):
                 title_render = title_font.render("MATRIX LOGIN", True, (32, 32, 255))
-                login_prompt_render = header_font.render("Login:", True, (255, 255, 255))
+
+                # Specify a login message that's more elaborate and specifies what is required
+                login_title = 'Login: (email:domain)'
+                login_prompt_render = header_font.render(login_title, True, (255, 255, 255))
                 surface.blit(title_render, (0,  0))
                 surface.blit(login_prompt_render, (0, 50))
                 surface.blit(textinput.get_surface(), (35, 100))
